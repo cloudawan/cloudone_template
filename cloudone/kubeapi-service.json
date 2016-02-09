@@ -1,0 +1,14 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "kubeapi"
+    },
+    "spec": {
+        "ports": [
+            {
+                "port": 8080
+            }
+        ]
+    }
+}

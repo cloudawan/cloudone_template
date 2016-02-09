@@ -1,0 +1,45 @@
+{
+    "kind": "Endpoints",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "etcd"
+    },
+    "subsets": [
+        {
+            "addresses": [
+                {
+                    "ip": "192.168.0.31"
+                }
+            ],
+            "ports": [
+                {
+                    "port": 4001
+                }
+            ]
+        },
+        {
+            "addresses": [
+                {
+                    "ip": "192.168.0.32"
+                }
+            ],
+            "ports": [
+                {
+                    "port": 4001
+                }
+            ]
+        },
+        {
+            "addresses": [
+                {
+                    "ip": "192.168.0.33"
+                }
+            ],
+            "ports": [
+                {
+                    "port": 4001
+                }
+            ]
+        }
+    ]
+}
