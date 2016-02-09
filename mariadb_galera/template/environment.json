@@ -1,0 +1,6 @@
+{
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex mariadb-galera",
+	"TERM": "The term used by mariadb. Ex dumb",
+	"ROOT_PASSWORD": "The root password for mariadb. Ex password"
+}

@@ -1,0 +1,24 @@
+{
+    "kind":"Service",
+    "apiVersion":"v1",
+    "metadata":{
+        "name":"rabbitmq",
+        "labels":{
+            "name":"rabbitmq"
+        }
+    },
+    "spec":{
+        "ports": [
+            {
+                "name": "amqp-tcp",
+                "port": 5672,
+                "targetPort": 5672,
+                "protocol": "TCP"
+            }
+        ],
+        "selector":{
+            "name":"rabbitmq"
+        },
+        "type": "NodePort"
+    }
+}

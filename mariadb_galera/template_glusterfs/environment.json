@@ -1,0 +1,9 @@
+{
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex mariadb-galera",
+	"TERM": "The term used by mariadb. Ex xterm",
+	"ROOT_PASSWORD": "The root password for mariadb. Ex password",
+	"XTRABACKUP_PASSWORD": "The password used by xtrabackup to synchronize for mariadb. Ex password",
+	"GLUSTERFS_PATH_LIST": "The glusterfs path list. Ex mariadb_galera_volume_1, mariadb_galera_volume_2, mariadb_galera_volume_3",
+	"GLUSTERFS_ENDPOINTS": "The endpoints used to forward to glusterfs server cluster. Ex glusterfs"
+}

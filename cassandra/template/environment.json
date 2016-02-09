@@ -1,0 +1,4 @@
+{
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex cassandra"
+}

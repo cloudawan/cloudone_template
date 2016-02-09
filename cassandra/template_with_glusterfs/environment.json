@@ -1,0 +1,6 @@
+{
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex cassandra",
+	"GLUSTERFS_PATH_LIST": "The glusterfs path list. Ex cassandra_volume_1, cassandra_volume_2, cassandra_volume_3",
+	"GLUSTERFS_ENDPOINTS": "The endpoints used to forward to glusterfs server cluster. Ex glusterfs"
+}

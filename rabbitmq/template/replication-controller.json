@@ -1,0 +1,66 @@
+{
+    "kind": "ReplicationController",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "rabbitmq",
+        "labels": {
+            "name": "rabbitmq"
+        }
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {"name": "rabbitmq"},
+        "template": {
+            "metadata": {
+                "labels": {
+                    "name": "rabbitmq"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "rabbitmq",
+                        "image": "cloudawan/rabbitmq",
+                        "ports": [
+                            {
+                                "name": "amqp-tcp", 
+                                "containerPort": 5672,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "value": "default"
+                            },
+                            {
+                                "name": "SERVICE_NAME",
+                                "value": "rabbitmq"
+                            },
+                            {
+                                "name": "USER_USERNAME",
+                                "value": "root"
+                            },
+                            {
+                                "name": "USER_PASSWORD",
+                                "value": "password"
+                            },
+                            {
+                                "name": "USER_PRIVILEGE_CONFIG",
+                                "value": ".*"
+                            },
+                            {
+                                "name": "USER_PRIVILEGE_WRITE",
+                                "value": ".*"
+                            },
+                            {
+                                "name": "USER_PRIVILEGE_READ",
+                                "value": ".*"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

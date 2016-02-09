@@ -1,0 +1,78 @@
+{
+    "apiVersion": "v1",
+    "kind": "ReplicationController",
+    "metadata": {
+        "name": "mariadb-galera-instance-2",
+        "labels": {
+            "name": "mariadb-galera-instance-2"
+        }
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "group": "mariadb-galera",
+            "name": "mariadb-galera-instance-2"
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "group": "mariadb-galera",
+                    "name": "mariadb-galera-instance-2"
+                }
+            },
+            "spec": {
+				"volumes": [
+                    {
+                        "name": "mariadb-galera-volume",
+                        "glusterfs": {
+                            "endpoints": "glusterfs-cluster",
+                            "path": "mariadb_galera_volume_2",
+                            "readOnly": false
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "image": "cloudawan/mariadb-galera",
+                        "name": "mariadb-galera",
+                        "ports": [
+                            {
+                                "name": "mysql",
+                                "containerPort": 3306
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "NAMESPACE",
+                                "value": "default"
+                            },
+                            {
+                                "name": "SERVICE_NAME",
+                                "value": "mariadb-galera"
+                            },
+                            {
+                                "name": "TERM",
+                                "value": "xterm"
+                            },
+                            {
+                                "name": "ROOT_PASSWORD",
+                                "value": "password"
+                            },
+                            {
+                                "name": "XTRABACKUP_PASSWORD",
+                                "value": "password"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "mariadb-galera-volume",
+                                "readOnly": false,
+                                "mountPath": "/var/lib/mysql"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "labels": {
+            "name": "mariadb-galera"
+        },
+        "name": "mariadb-galera"
+    },
+    "spec": {
+        "ports": [
+            {
+                "name": "mysql",
+                "port": 3306,
+                "targetPort":3306,
+                "protocol":"TCP"
+            }
+        ],
+        "selector": {
+            "name": "mariadb-galera"
+        },
+        "type": "NodePort"
+    }
+}

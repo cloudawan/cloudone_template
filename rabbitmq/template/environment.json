@@ -1,0 +1,9 @@
+{
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex rabbitmq",
+	"USER_USERNAME": "Rabbitmq user. Ex root",
+	"USER_PASSWORD": "Rabbitmq password. Ex password",
+	"USER_PRIVILEGE_CONFIG": "Rabbitmq priviledge config for user. Ex .*",
+	"USER_PRIVILEGE_WRITE": "Rabbitmq priviledge write for user. Ex .*",
+	"USER_PRIVILEGE_READ": "Rabbitmq priviledge read for user. Ex .*"
+}

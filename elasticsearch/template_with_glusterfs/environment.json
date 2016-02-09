@@ -1,0 +1,4 @@
+{
+	"GLUSTERFS_PATH_LIST": "The glusterfs path list. Ex elasticsearch_volume",
+	"GLUSTERFS_ENDPOINTS": "The endpoints used to forward to glusterfs server cluster. Ex glusterfs"
+}
