@@ -76,7 +76,7 @@
                             },
                             {
                                 "name": "ETCD_ENDPOINT",
-                                "value": "\"http://etcd.default.cluster.local:4001\""
+                                "value": "\"http://etcd.default.svc.cluster.local:4001\""
                             }
                         ],
                         "volumeMounts": [
@@ -99,7 +99,7 @@
                         "env": [
                             {
                                 "name": "KUBEAPI_CLUSTER_HOST_AND_PORT",
-                                "value": "kubeapi.default.cluster.local:8080"
+                                "value": "kubeapi.default.svc.cluster.local:8080"
                             },
                             {
                                 "name": "CLOUDONE_HOST",
@@ -131,7 +131,7 @@
                         "env": [
                             {
                                 "name": "KUBEAPI_CLUSTER_HOST_AND_PORT",
-                                "value": "\"kubeapi.default.cluster.local:8080\""
+                                "value": "\"kubeapi.default.svc.cluster.local:8080\""
                             },
                             {
                                 "name": "ELASTICSEARCH_CLUSTER_HOST",
