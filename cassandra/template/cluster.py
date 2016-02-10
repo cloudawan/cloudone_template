@@ -379,16 +379,30 @@ class Cluster:
 class Cassandra(Cluster):
     def __init__(self):
         Cluster.__init__(self)
-        
-        # Set environment
-        for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
-            for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
-                if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "POD_NAMESPACE":
-                    self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
-    
-        self.seed_instance_up_keyword_list = ["Listening for thrift clients"]
-        self.all_instance_up_keyword_list = ["Handshaking version with", "is now part of the cluster", "Listening for thrift clients"]
-        self.all_instance_failure_keyword_list = ["Exception encountered during startup", "Announcing shutdown"]
+
+        if self.action == "create":
+            # Set environment
+            for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
+                for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "POD_NAMESPACE":
+                        self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
+
+            self.seed_instance_up_keyword_list = ["Listening for thrift clients"]
+            self.all_instance_up_keyword_list = ["Handshaking version with", "is now part of the cluster", "Listening for thrift clients"]
+            self.all_instance_failure_keyword_list = ["Exception encountered during startup", "Announcing shutdown"]
+        elif self.action == "resize":
+            # Set environment
+            for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
+                for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "POD_NAMESPACE":
+                        self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
+
+            self.seed_instance_up_keyword_list = ["Listening for thrift clients"]
+            self.all_instance_up_keyword_list = ["Handshaking version with", "is now part of the cluster", "Listening for thrift clients"]
+            self.all_instance_failure_keyword_list = ["Exception encountered during startup", "Announcing shutdown"]
+        elif self.action == "delete":
+            pass
+
 
 
 cassandra = Cassandra()
