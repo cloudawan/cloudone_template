@@ -47,34 +47,6 @@
                         ],
                         "env": [
                             {
-                                "name": "EMAIL_SENDER_ACCOUNT",
-                                "value": "cloudawanemailtest@gmail.com"
-                            },
-                            {
-                                "name": "EMAIL_SENDER_PASSWORD",
-                                "value": "cloudawan4test"
-                            },
-                            {
-                                "name": "EMAIL_SENDER_HOST",
-                                "value": "smtp.gmail.com"
-                            },
-                            {
-                                "name": "EMAIL_SENDER_PORT",
-                                "value": "587"
-                            },
-                            {
-                                "name": "SMS_NEXMO_URL",
-                                "value": "https://rest.nexmo.com/sms/json"
-                            },
-                            {
-                                "name": "SMS_NEXMO_API_KEY",
-                                "value": "2045d69e"
-                            },
-                            {
-                                "name": "SMS_NEXMO_API_SECRET",
-                                "value": "fcaf0b59"
-                            },
-                            {
                                 "name": "ETCD_ENDPOINT",
                                 "value": "\"http://etcd.default.svc.cluster.local:4001\""
                             }
