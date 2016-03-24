@@ -29,19 +29,20 @@ class Utility:
 class Cluster:
     SUCEESS = 0
     ERROR_OTHER = 1
-    ERROR_NO_ACTION_PARAMETER = 2
-    ERROR_PARAMETER_MISSING = 3
-    ERROR_SIZE_LESS_THAN_ONE = 4
-    ERROR_FAIL_TO_CREATE_REPLICATION_CONTROLLER = 5
-    ERROR_FAIL_TO_GET_SEED_POD_NAME = 6
-    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 7
-    ERROR_FAIL_TO_CREATE_SERVICE = 8
-    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 9
-    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_DATA = 10
-    ERROR_FAIL_TO_PUT_OWNING_REPLICATION_CONTROLLER_DATA = 11
-    ERROR_FAIL_TO_DELETE_SERVICE = 12
-    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 13
-    ERROR_FAIL_TO_DELETE_POD = 14
+    ERROR_NO_SUCH_ACTION_SUPPORT = 2
+    ERROR_NO_ACTION_PARAMETER = 3
+    ERROR_PARAMETER_MISSING = 4
+    ERROR_SIZE_LESS_THAN_ONE = 5
+    ERROR_FAIL_TO_CREATE_REPLICATION_CONTROLLER = 6
+    ERROR_FAIL_TO_GET_SEED_POD_NAME = 7
+    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 8
+    ERROR_FAIL_TO_CREATE_SERVICE = 9
+    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 10
+    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_DATA = 11
+    ERROR_FAIL_TO_PUT_OWNING_REPLICATION_CONTROLLER_DATA = 12
+    ERROR_FAIL_TO_DELETE_SERVICE = 13
+    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 14
+    ERROR_FAIL_TO_DELETE_POD = 15
 
     def __init__(self):
         self.parameter_dictionary = self.__get_input()
@@ -162,7 +163,7 @@ class Cluster:
         result = True
         for parameter in self.parameter_list:
             if self.parameter_dictionary.get(parameter) == None:
-                print "Parameter " + key + " is missing"
+                print "Parameter " + parameter + " is missing"
                 result = False
         return result
 
@@ -412,10 +413,11 @@ if cassandra.action == "create":
         cassandra.clean_cluster()
         sys.exit(status_code)
 elif cassandra.action == "resize":
-    status_code = cassandra.resize_cluster()
+    status_code = cassandra.resize_cluster(cassandra.size)
     sys.exit(status_code)
 elif cassandra.action == "delete":
     status_code = cassandra.clean_cluster()
     sys.exit(status_code)
 else:
     print "No such action"
+    sys.exit(Cluster.ERROR_NO_SUCH_ACTION_SUPPORT)

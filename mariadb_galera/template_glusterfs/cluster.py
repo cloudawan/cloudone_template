@@ -29,17 +29,18 @@ class Utility:
 class ClusterWithGlusterfs:
     SUCEESS = 0
     ERROR_OTHER = 1
-    ERROR_NO_ACTION_PARAMETER = 2
-    ERROR_PARAMETER_MISSING = 3
-    ERROR_SIZE_LESS_THAN_ONE = 4
-    ERROR_SIZE_DIFFERENT_FROM_GLUSTERFS_PATH_AMOUNT = 5
-    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 6
-    ERROR_FAIL_TO_CREATE_SERVICE = 7
-    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 8
-    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_LIST = 9
-    ERROR_FAIL_TO_DELETE_SERVICE = 10
-    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 11
-    ERROR_FAIL_TO_DELETE_POD = 12
+    ERROR_NO_SUCH_ACTION_SUPPORT = 2
+    ERROR_NO_ACTION_PARAMETER = 3
+    ERROR_PARAMETER_MISSING = 4
+    ERROR_SIZE_LESS_THAN_ONE = 5
+    ERROR_SIZE_DIFFERENT_FROM_GLUSTERFS_PATH_AMOUNT = 6
+    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 7
+    ERROR_FAIL_TO_CREATE_SERVICE = 8
+    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 9
+    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_LIST = 10
+    ERROR_FAIL_TO_DELETE_SERVICE = 11
+    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 12
+    ERROR_FAIL_TO_DELETE_POD = 13
 
     def __init__(self):
         self.parameter_dictionary = self.__get_input()
@@ -181,7 +182,7 @@ class ClusterWithGlusterfs:
         result = True
         for parameter in self.parameter_list:
             if self.parameter_dictionary.get(parameter) == None:
-                print "Parameter " + key + " is missing"
+                print "Parameter " + parameter + " is missing"
                 result = False
         return result
         
@@ -477,3 +478,4 @@ elif mariadb.action == "delete":
     sys.exit(status_code)
 else:
     print "No such action"
+    sys.exit(ClusterWithGlusterfs.ERROR_NO_SUCH_ACTION_SUPPORT)
