@@ -53,6 +53,10 @@
                             {
                                 "name": "REGISTRY_HTTP_TLS_KEY",
                                 "value": "/certs/private_registry_key.pem"
+                            },
+                            {
+                                "name": "REGISTRY_STORAGE_DELETE_ENABLED",
+                                "value": "true"
                             }
                         ],
                         "volumeMounts": [
