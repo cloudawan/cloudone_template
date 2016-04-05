@@ -353,7 +353,7 @@ class ClusterWithGlusterfs:
             for i in xrange(1, self.size):
                 if self.__create_replication_controller_and_check(i, self.__check_joining_instance_up) is False:
                     print("Fail to create joining instance " + str(i))
-                    return False, ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_JOINING_INSTANCE
+                    return ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_JOINING_INSTANCE
             return ClusterWithGlusterfs.SUCEESS
         else:
             return ClusterWithGlusterfs.SUCEESS
@@ -395,7 +395,7 @@ class ClusterWithGlusterfs:
             for i in xrange(current_size, self.size):
                 if self.__create_replication_controller_and_check(i, self.__check_joining_instance_up) is False:
                     print("Fail to create joining instance " + str(i))
-                    return False, ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_JOINING_INSTANCE
+                    return ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_JOINING_INSTANCE
             return ClusterWithGlusterfs.SUCEESS
             
     def clean_cluster(self):
