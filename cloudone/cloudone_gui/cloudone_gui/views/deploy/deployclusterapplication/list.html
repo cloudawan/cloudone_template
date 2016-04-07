@@ -28,10 +28,20 @@
 						<td>{{$deployClusterApplication.Name}}</td>
 						<td>{{$deployClusterApplication.Size}}</td>
 						<td>{{$deployClusterApplication.ServiceName}}</td>
-						<td>{{$deployClusterApplication.ReplicationControllerNameSlice}}</td>
 						<td>
-							<a class="btn btn-xs btn-info" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deployclusterapplication/size?name={{$deployClusterApplication.Name}}&size={{$deployClusterApplication.Size}}" >Resize</a>	
-							<a class="btn btn-xs btn-danger" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deployclusterapplication/delete?clusterApplicationName={{$deployClusterApplication.Name}}">Delete</a>
+							{{range $replicationControllerNameKey, $replicationControllerName := $deployClusterApplication.ReplicationControllerNameSlice}}
+								{{ $replicationControllerName }}<br/>
+							{{end}}
+						</td>
+						<td>
+							<div class="btn-group ">
+								{{ str2html $deployClusterApplication.HiddenTagGuiDeployDeployClusterApplicationSize }}
+									<a class="btn btn-xs btn-info" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deployclusterapplication/size?name={{$deployClusterApplication.Name}}&size={{$deployClusterApplication.Size}}" >Resize</a>
+								</div>
+								{{ str2html $deployClusterApplication.HiddenTagGuiDeployDeployClusterApplicationDelete }}
+									<button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#linkModal" data-action="Delete {{$deployClusterApplication.Name}}" data-color="btn-danger" data-herf="/gui/deploy/deployclusterapplication/delete?clusterApplicationName={{$deployClusterApplication.Name}}">Delete</button>
+								</div>
+							</div>
 						</td>
 					</tr>
 				{{end}}

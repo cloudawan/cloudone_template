@@ -12,7 +12,14 @@
 		<div class="col-md-12">
 
 			<div class="">
-				<a class="btn btn-md btn-success pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/inventory/service/edit">Create</a>
+				</div>
+
+			<div class="pull-right">
+				<div class="btn-group">
+					{{ str2html .hiddenTagGuiInventoryServiceEdit }}
+						<a class="btn btn-md btn-success pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/inventory/service/edit">Create</a>
+					</div>
+				</div>
 			</div>
 			
 			<table class="table table-condensed tree">
@@ -34,7 +41,11 @@
 						<td>{{$serviceKey}}</td>
 						<td>{{$service.Name}}</td>
 						<td>{{$service.Namespace}}</td>
-						<td>{{$service.Selector}}</td>
+						<td>
+							{{range $selectorKey, $selectorValue := $service.Selector}}
+								{{$selectorKey}}: {{$selectorValue}}<br/>
+							{{end}}
+						</td>
 						<td>{{$service.ClusterIP}}</td>
 						<td>
 							{{range $labelKey, $labelValue := $service.LabelMap}}
@@ -43,7 +54,11 @@
 						</td>
 						<td>{{$service.SessionAffinity}}</td>
 						<td>
-							<a class="btn btn-xs btn-danger" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/inventory/service/delete?namespace={{$service.Namespace}}&service={{$service.Name}}" {{$service.Display}}>Delete</a>
+							<div class="btn-group ">
+								{{ str2html $service.HiddenTagGuiInventoryServiceDelete }}
+									<button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#linkModal" data-action="Delete {{$service.Name}}" data-color="btn-danger" data-herf="/gui/inventory/service/delete?namespace={{$service.Namespace}}&service={{$service.Name}}" {{$service.Display}}>Delete</button>
+								</div>
+							</div>
 						</td>
 					</tr>
 				
@@ -56,6 +71,7 @@
 							<th>TargetPort</th>
 							<th>NodePort</th>
 							<th></th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					
@@ -68,6 +84,13 @@
 							<td>{{$port.TargetPort}}</td>
 							<td>{{$port.NodePort}}</td>
 							<td></td>
+							<td>
+								<div class="btn-group">
+									<div {{ $port.HiddenTagNodePort }}>
+										<a class="btn btn-xs btn-primary" target="_blank" href="{{ $port.NodePortURL }}">Aceess</a>
+									</div>
+								</div>
+							</td>
 						</tr>		
 					{{end}}
 

@@ -7,11 +7,20 @@
 	<div class="page-header">
 		<h1>SMS List</h1>
 	</div>
+
+	<ul class="nav nav-tabs" role="tablist">
+		{{ str2html .systemNotificationTabMenu }}
+	</ul>
+
 	<div class="row">
 		<div class="col-md-12">
 			
-			<div class="">
-				<a class="btn btn-md btn-success pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/system/notification/sms/create">Create</a>
+			<div class="pull-right">
+				<div class="btn-group">
+					{{ str2html .hiddenTagGuiSystemNotificationSMSCreate }}
+						<a class="btn btn-md btn-success pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/system/notification/sms/create">Create</a>
+					</div>
+				</div>
 			</div>
 			
 			<table class="table table-condensed tree">
@@ -32,9 +41,13 @@
 						<td>{{$smsNexmo.Name}}</td>
 						<td>{{$smsNexmo.Url}}</td>
 						<td>{{$smsNexmo.APIKey}}</td>
-						<td>{{$smsNexmo.APISecret}}</td>
+						<td>******</td>
 						<td>
-							<a class="btn btn-xs btn-danger" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/system/notification/sms/delete?name={{$smsNexmo.Name}}">Delete</a>
+							<div class="btn-group">
+								{{ str2html $smsNexmo.HiddenTagGuiSystemNotificationSMSDelete }}
+									<button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#linkModal" data-action="Delete {{$smsNexmo.Name}}" data-color="btn-danger" data-herf="/gui/system/notification/sms/delete?name={{$smsNexmo.Name}}">Delete</button>
+								</div>
+							</div>
 						</td>
 					</tr>
 				{{end}}

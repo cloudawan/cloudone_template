@@ -14,16 +14,12 @@
 
 					{{range $logKey, $log := .logJsonMap}}
 						<label class="col-md-2">{{$logKey}}:</label>
-						<textarea class="col-md-10" readonly rows="30" >
-							{{ $log }}
-						</textarea>
+						<textarea class="col-md-10" readonly rows="30" >{{ $log }}</textarea>
 					{{end}}
 					
 				</div>
 
-				<a class="btn btn-md btn-warning pull-right" 
-					onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" 
-					href="/gui/inventory/replicationcontroller/">Cancel</a>
+				<a class="btn btn-md btn-warning pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/inventory/replicationcontroller/list">Cancel</a>
 			</form>
 		</div>
 	</div>

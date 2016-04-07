@@ -9,11 +9,11 @@
 	</div>
 	<div class="row">
 		<div class="col-md-9">	
-			<form class="form-horizontal" action="/gui/notification/notifier/edit" method="post">		
+			<form class="form-horizontal" onsubmit="$('#idWaitingPanel').modal({backdrop: 'static'});" action="/gui/notification/notifier/edit" method="post">
 				<div class="form-group">
 					<label class="col-md-3 control-label" for="kind">Type:</label>
 					<div class="col-md-9">
-						<select id="kind" class="form-control" name="kind" value="{{ .kind }}" {{ .readonly }}>
+						<select id="kind" class="form-control" name="kind" value="{{ .kind }}" {{ .readonly }} required>
 							<option value="selector" {{ .selectorSelected }}>Selector</option>
 							<option value="replicationController" {{ .replicationControllerSelected }}>ReplicationController</option>
 						</select>
@@ -22,7 +22,7 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label" for="name">Name:</label>
 					<div class="col-md-9">
-						<input id="name" class="form-control" type="text" name="name" value="{{ .name }}" {{ .readonly }}>
+						<input id="name" class="form-control" type="text" name="name" value="{{ .name }}" {{ .readonly }} required>
 					</div>
 				</div>
 				<div class="form-group">
@@ -66,7 +66,7 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label" for="coolDownDuration">Cool Down Duration (second):</label>
 					<div class="col-md-9">
-						<input id="coolDownDuration" class="form-control" type="number" name="coolDownDuration" min="10" max="3600" value="{{ .coolDownDuration }}">
+						<input id="coolDownDuration" class="form-control" type="number" name="coolDownDuration" min="10" max="3600" value="{{ .coolDownDuration }}" required>
 					</div>
 				</div>
 
@@ -162,8 +162,8 @@
 					</div>
 				</div>
 
-				<a class="btn btn-md btn-warning pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/notification/notifier/">Cancel</a>
-				<input class="btn btn-md btn-info pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" type="submit" value="{{.actionButtonValue}}">
+				<a class="btn btn-md btn-warning pull-right" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/notification/notifier/list">Cancel</a>
+				<input class="btn btn-md btn-info pull-right" type="submit" value="{{.actionButtonValue}}">
 				
 			</form>
 		</div>

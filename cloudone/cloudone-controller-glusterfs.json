@@ -112,11 +112,19 @@
                             {
                                 "name": "ELASTICSEARCH_CLUSTER_PORT",
                                 "value": "9200"
+                            },
+                            {
+                                "name": "CLOUDONE_HOST",
+                                "value": "127.0.0.1"
+                            },
+                            {
+                                "name": "CLOUDONE_PORT",
+                                "value": "8081"
                             }
                         ]
                     },
                     {
-                        "image": "library/elasticsearch:1.7",
+                        "image": "library/elasticsearch:2.1",
                         "name": "elasticsearch",
                         "ports": [
                             {

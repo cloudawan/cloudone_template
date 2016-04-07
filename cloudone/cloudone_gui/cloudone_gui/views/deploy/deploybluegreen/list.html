@@ -28,12 +28,18 @@
 						<td>{{$deployBlueGreenKey}}</td>
 						<td>{{$deployBlueGreen.ImageInformation}}</td>
 						<td>{{$deployBlueGreen.Namespace}}</td>
-						<td>{{$deployBlueGreen.NodePort}}</td>
+						<td>{{$deployBlueGreen.NodePortDisplay}}</td>
 						<td>{{$deployBlueGreen.Description}}</td>
 						<td>{{$deployBlueGreen.SessionAffinity}}</td>
 						<td>
-							<a class="btn btn-xs btn-info" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deploybluegreen/select?imageInformation={{$deployBlueGreen.ImageInformation}}&currentEnvironment={{$deployBlueGreen.Namespace}}&nodePort={{$deployBlueGreen.NodePort}}&description={{$deployBlueGreen.Description}}">Select</a>
-							<a class="btn btn-xs btn-danger" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deploybluegreen/delete?imageInformation={{$deployBlueGreen.ImageInformation}}">Delete</a>
+							<div class="btn-group ">
+								{{ str2html $deployBlueGreen.HiddenTagGuiDeployDeployBlueGreenSelect }}
+									<a class="btn btn-xs btn-info" onclick="$('#idWaitingPanel').modal({backdrop: 'static'});" href="/gui/deploy/deploybluegreen/select?imageInformation={{$deployBlueGreen.ImageInformation}}">Select</a>
+								</div>
+								{{ str2html $deployBlueGreen.HiddenTagGuiDeployDeployBlueGreenDelete }}
+									<button class="btn btn-xs btn-danger" type="button" data-toggle="modal" data-target="#linkModal" data-action="Delete {{$deployBlueGreen.ImageInformation}}" data-color="btn-danger" data-herf="/gui/deploy/deploybluegreen/delete?imageInformation={{$deployBlueGreen.ImageInformation}}">Delete</button>
+								</div>
+							</div>
 						</td>
 					</tr>
 				{{end}}
