@@ -49,6 +49,14 @@
                             {
                                 "name": "ETCD_ENDPOINT",
                                 "value": "\"http://etcd.default.svc.cluster.local:4001\""
+                            },
+                            {
+                                "name": "CLOUDONE_ANALYSIS_HOST",
+                                "value": "127.0.0.1"
+                            },
+                            {
+                                "name": "CLOUDONE_ANALYSIS_PORT",
+                                "value": "8082"
                             }
                         ],
                         "volumeMounts": [

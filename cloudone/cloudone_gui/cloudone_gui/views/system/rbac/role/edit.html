@@ -15,7 +15,7 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label" for="name">Name:</label>
 					<div class="col-md-9">
-						<input id="name" class="form-control" type="text" name="name" value="{{ .name }}" required>
+						<input id="name" class="form-control" type="text" name="name" value="{{ .name }}" required {{ .readonly }}>
 					</div>
 				</div>
 				
@@ -508,6 +508,20 @@
 					</div>
 				</div>
 				<div id="regionEvent" {{ .hiddenTagEvent }}>
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="eventAudit">Audit Logs:</label>
+						<div class="col-md-offset-1 col-md-5 checkbox">
+							<input id="eventAudit" type="checkbox" name="eventAudit" onclick="$('#regionEventAudit').toggle();" {{ .checkedTagEventAudit }}>
+						</div>
+					</div>
+					<div id="regionEventAudit" {{ .hiddenTagEventAudit }}>
+						<div class="form-group">
+							<label class="col-md-5 control-label" for="eventAuditList">View:</label>
+							<div class="col-md-offset-1 col-md-4 checkbox">
+								<input id="eventAuditList" type="checkbox" name="eventAuditList"{{ .checkedTagEventAuditList }}>
+							</div>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="eventKubernetes">Kubernetes:</label>
 						<div class="col-md-offset-1 col-md-5 checkbox">
