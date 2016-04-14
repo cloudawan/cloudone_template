@@ -132,7 +132,7 @@
                         ]
                     },
                     {
-                        "image": "library/elasticsearch:2.1",
+                        "image": "cloudawan/elasticsearch",
                         "name": "elasticsearch",
                         "ports": [
                             {

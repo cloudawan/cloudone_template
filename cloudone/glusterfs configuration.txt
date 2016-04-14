@@ -1,0 +1,7 @@
+sudo gluster volume set cloudone_elasticsearch_volume performance.md-cache-timeout 0
+sudo gluster volume set cloudone_elasticsearch_volume performance.write-behind off
+sudo gluster volume set cloudone_elasticsearch_volume performance.read-ahead off
+sudo gluster volume set cloudone_elasticsearch_volume performance.io-cache off
+sudo gluster volume set cloudone_elasticsearch_volume performance.quick-read off
+sudo gluster volume set cloudone_elasticsearch_volume performance.stat-prefetch off
+sudo gluster volume set cloudone_elasticsearch_volume performance.readdir-ahead off

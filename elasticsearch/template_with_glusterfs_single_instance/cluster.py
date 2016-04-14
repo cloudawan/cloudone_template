@@ -34,13 +34,14 @@ class ClusterWithGlusterfs:
     ERROR_PARAMETER_MISSING = 4
     ERROR_SIZE_LESS_THAN_ONE = 5
     ERROR_SIZE_DIFFERENT_FROM_GLUSTERFS_PATH_AMOUNT = 6
-    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 7
-    ERROR_FAIL_TO_CREATE_SERVICE = 8
-    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 9
-    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_LIST = 10
-    ERROR_FAIL_TO_DELETE_SERVICE = 11
-    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 12
-    ERROR_FAIL_TO_DELETE_POD = 13
+    ERROR_FAIL_TO_CREATE_REPLICATION_CONTROLLER = 7
+    ERROR_FAIL_TO_CREATE_SEED_INSTANCE = 8
+    ERROR_FAIL_TO_CREATE_SERVICE = 9
+    ERROR_FAIL_TO_CREATE_JOINING_INSTANCE = 10
+    ERROR_FAIL_TO_GET_OWNING_REPLICATION_CONTROLLER_LIST = 11
+    ERROR_FAIL_TO_DELETE_SERVICE = 12
+    ERROR_FAIL_TO_DELETE_REPLICATION_CONTROLLER = 13
+    ERROR_FAIL_TO_DELETE_POD = 14
 
     def __init__(self):
         self.parameter_dictionary = self.__get_input()
@@ -286,8 +287,13 @@ class ClusterWithGlusterfs:
     
     def __create_replication_controller_and_check(self, replication_controller_number, check_function):
         # Create a replication controller
-        self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/replicationcontrollers", "POST", json.dumps(self.__create_replication_controller(replication_controller_number)))
+        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
+                                       "/replicationcontrollers", "POST", json.dumps(self.__create_replication_controller(replication_controller_number)))
+        if head.status != 201:
+            print "Fail to create replication controller " + self.__get_replication_controller_instance_name(replication_controller_number)
+            print head
+            print body
+            return ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_REPLICATION_CONTROLLER
 
         # Get pod name
         pod_list = Utility.execute_until_timeout(self.__get_all_pod_name_in_replication_controller, self.time_to_wait, 1, replication_controller_number)
@@ -338,8 +344,13 @@ class ClusterWithGlusterfs:
             return ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_SEED_INSTANCE
     
         # Create a service to track joining instances
-        self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/services", "POST", json.dumps(self.__create_service()))
+        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
+                                       "/services", "POST", json.dumps(self.__create_service()))
+        if head.status != 201:
+            print "Fail to create service " + self.service_name
+            print head
+            print body
+            return ClusterWithGlusterfs.ERROR_FAIL_TO_CREATE_SERVICE
             
         # Check service
         if Utility.execute_until_timeout(self.__check_service_up, self.time_to_wait):
