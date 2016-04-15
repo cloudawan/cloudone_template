@@ -27,6 +27,12 @@
                         }
                     },
                     {
+                        "name": "localtime",
+                        "hostPath": {
+                            "path": "/etc/localtime"
+                        }
+                    },
+                    {
                         "name": "elasticsearch-volume",
                         "glusterfs": {
                             "endpoints": "glusterfs",
@@ -64,6 +70,11 @@
                                 "name": "docker",
                                 "readOnly": true,
                                 "mountPath": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "localtime",
+                                "readOnly": true,
+                                "mountPath": "/etc/localtime"
                             }
                         ]
                     },
@@ -97,6 +108,13 @@
                                 "name": "CLOUDONE_ANALYSIS_PORT",
                                 "value": "8082"
                             }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "localtime",
+                                "readOnly": true,
+                                "mountPath": "/etc/localtime"
+                            }
                         ]
                     },
                     {
@@ -129,6 +147,13 @@
                                 "name": "CLOUDONE_PORT",
                                 "value": "8081"
                             }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "localtime",
+                                "readOnly": true,
+                                "mountPath": "/etc/localtime"
+                            }
                         ]
                     },
                     {
@@ -145,6 +170,11 @@
                                 "name": "elasticsearch-volume",
                                 "readOnly": false,
                                 "mountPath": "/usr/share/elasticsearch/data"
+                            },
+                            {
+                                "name": "localtime",
+                                "readOnly": true,
+                                "mountPath": "/etc/localtime"
                             }
                         ]
                     }
