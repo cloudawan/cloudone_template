@@ -599,6 +599,13 @@
 				</div>
 				<div id="regionSystem" {{ .hiddenTagSystem }}>
 					<div class="form-group">
+						<label class="col-md-4 control-label" for="systemAbout">About:</label>
+						<div class="col-md-offset-1 col-md-5 checkbox">
+							<input id="systemAbout" type="checkbox" name="systemAbout" {{ .checkedTagSystemAbout }}>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<label class="col-md-4 control-label" for="systemNamespace">Namespaces:</label>
 						<div class="col-md-offset-1 col-md-5 checkbox">
 							<input id="systemNamespace" type="checkbox" name="systemNamespace" onclick="$('#regionSystemNamespace').toggle();" {{ .checkedTagSystemNamespace }}>
@@ -621,6 +628,12 @@
 							<label class="col-md-5 control-label" for="systemNamespaceSelect">Select:</label>
 							<div class="col-md-offset-1 col-md-4 checkbox">
 								<input id="systemNamespaceSelect" type="checkbox" name="systemNamespaceSelect" {{ .checkedTagSystemNamespaceSelect }}>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-5 control-label" for="systemNamespaceBookmark">Bookmark:</label>
+							<div class="col-md-offset-1 col-md-4 checkbox">
+								<input id="systemNamespaceBookmark" type="checkbox" name="systemNamespaceBookmark" {{ .checkedTagSystemNamespaceBookmark }}>
 							</div>
 						</div>
 						<div class="form-group">
