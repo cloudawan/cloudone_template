@@ -61,7 +61,17 @@
                                 "readOnly": false,
                                 "mountPath": "/var/lib/cassandra"
                             }
-                        ]
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
                     }
                 ]
             }

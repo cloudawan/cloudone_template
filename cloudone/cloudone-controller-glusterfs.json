@@ -76,7 +76,17 @@
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
                             }
-                        ]
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
                     },
                     {
                         "name": "cloudone-gui",
@@ -115,7 +125,17 @@
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
                             }
-                        ]
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
                     },
                     {
                         "name": "cloudone-analysis",
@@ -154,7 +174,17 @@
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
                             }
-                        ]
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
                     },
                     {
                         "image": "cloudawan/elasticsearch",
@@ -176,7 +206,17 @@
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
                             }
-                        ]
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
                     }
                 ]
             }

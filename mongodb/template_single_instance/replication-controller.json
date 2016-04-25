@@ -1,0 +1,46 @@
+{
+    "kind": "ReplicationController",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "mongodb",
+        "labels": {
+            "name": "mongodb"
+        }
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {"name": "mongodb"},
+        "template": {
+            "metadata": {
+                "labels": {
+                    "name": "mongodb"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "mongodb",
+                        "image": "cloudawan/mongodb",
+                        "ports": [
+                            {
+                                "name": "mongodb", 
+                                "containerPort": 27017,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 2,
+                                "memory": "4096Mi"
+                            },
+                            "requests": {
+                                "cpu": 0.5,
+                                "memory": "1024Mi"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
