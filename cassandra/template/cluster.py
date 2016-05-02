@@ -385,7 +385,7 @@ class Cassandra(Cluster):
             # Set environment
             for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
                 for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
-                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "POD_NAMESPACE":
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
                         self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
 
             self.seed_instance_up_keyword_list = ["Listening for thrift clients"]
@@ -395,7 +395,7 @@ class Cassandra(Cluster):
             # Set environment
             for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
                 for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
-                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "POD_NAMESPACE":
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
                         self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
 
             self.seed_instance_up_keyword_list = ["Listening for thrift clients"]
