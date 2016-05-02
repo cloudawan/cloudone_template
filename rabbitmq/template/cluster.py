@@ -380,17 +380,30 @@ class Cluster:
 class Rabbitmq(Cluster):
     def __init__(self):
         Cluster.__init__(self)
-        
-        # Set environment
-        for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
-            for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
-                if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
-                    self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
-    
-        self.seed_instance_up_keyword_list = ["Seed instance started"]
-        self.all_instance_up_keyword_list = ["Instance joined cluster"]
-        self.all_instance_failure_keyword_list = ["Fail to join cluster"]
 
+        if self.action == "create":
+            # Set environment
+            for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
+                for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
+                        self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
+        
+            self.seed_instance_up_keyword_list = ["Seed instance started"]
+            self.all_instance_up_keyword_list = ["Instance joined cluster"]
+            self.all_instance_failure_keyword_list = ["Fail to join cluster"]
+        elif self.action == "resize":
+            # Set environment
+            for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
+                for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
+                        self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
+        
+            self.seed_instance_up_keyword_list = ["Seed instance started"]
+            self.all_instance_up_keyword_list = ["Instance joined cluster"]
+            self.all_instance_failure_keyword_list = ["Fail to join cluster"]
+        elif self.action == "delete":
+            pass
+            
 
 rabbitmq = Rabbitmq()
 if rabbitmq.action == "create":

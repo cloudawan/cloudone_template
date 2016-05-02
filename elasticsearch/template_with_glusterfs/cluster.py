@@ -461,7 +461,16 @@ class ElasticSearch(ClusterWithGlusterfs):
             self.joining_instance_up_keyword_list = ["started"]
             self.joining_node_failure_keyword_list = []
         elif self.action == "resize":
-            raise Exception("Template doesn't support resize")
+            # Set environment
+            for i in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"])):
+                for j in xrange(0, len(self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"])):
+                    if self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["name"] == "NAMESPACE":
+                        self.replication_controller_dictionary["spec"]["template"]["spec"]["containers"][i]["env"][j]["value"] = self.namespace
+
+            self.volume_to_mount = "elasticsearch-volume"
+            self.seed_instance_up_keyword_list = ["started"]
+            self.joining_instance_up_keyword_list = ["started"]
+            self.joining_node_failure_keyword_list = []
         elif self.action == "delete":
             pass
 
