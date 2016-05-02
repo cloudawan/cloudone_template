@@ -1,4 +1,6 @@
 {
-	"GLUSTERFS_PATH_LIST": "The glusterfs path list. Ex elasticsearch_volume",
+	"NAMESPACE": "The namespaces where the cluster is. Ex default",
+	"SERVICE_NAME": "The service name. Ex elasticsearch",
+	"GLUSTERFS_PATH_LIST": "The glusterfs path list. Ex elasticsearch_volume_1, elasticsearch_volume_2, elasticsearch_volume_3",
 	"GLUSTERFS_ENDPOINTS": "The endpoints used to forward to glusterfs server cluster. Ex glusterfs"
 }
