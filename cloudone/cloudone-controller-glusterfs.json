@@ -39,6 +39,12 @@
                             "path": "cloudone_elasticsearch_volume",
                             "readOnly": false
                         }
+                    },
+                    {
+                        "name": "hosts",
+                        "hostPath": {
+                            "path": "/etc/hosts"
+                        }
                     }
                 ],
                 "containers": [
@@ -75,6 +81,11 @@
                                 "name": "localtime",
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
+                            },
+                            {
+                                "name": "hosts",
+                                "readOnly": true,
+                                "mountPath": "/etc/hosts"
                             }
                         ],
                         "resources": {
@@ -83,8 +94,8 @@
                                 "memory": "4096Mi"
                             },
                             "requests": {
-                                "cpu": 0.5,
-                                "memory": "1024Mi"
+                                "cpu": 0.3,
+                                "memory": "512Mi"
                             }
                         }
                     },
@@ -132,8 +143,8 @@
                                 "memory": "4096Mi"
                             },
                             "requests": {
-                                "cpu": 0.5,
-                                "memory": "1024Mi"
+                                "cpu": 0.3,
+                                "memory": "512Mi"
                             }
                         }
                     },
@@ -181,8 +192,8 @@
                                 "memory": "4096Mi"
                             },
                             "requests": {
-                                "cpu": 0.5,
-                                "memory": "1024Mi"
+                                "cpu": 0.3,
+                                "memory": "512Mi"
                             }
                         }
                     },
@@ -213,8 +224,8 @@
                                 "memory": "4096Mi"
                             },
                             "requests": {
-                                "cpu": 0.5,
-                                "memory": "1024Mi"
+                                "cpu": 0.3,
+                                "memory": "512Mi"
                             }
                         }
                     }
