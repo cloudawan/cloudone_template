@@ -45,6 +45,12 @@
                         "hostPath": {
                             "path": "/etc/hosts"
                         }
+                    },
+                    {
+                        "name": "shared-volume",
+                        "emptyDir": {
+                            "medium": ""
+                        }
                     }
                 ],
                 "containers": [
@@ -86,6 +92,11 @@
                                 "name": "hosts",
                                 "readOnly": true,
                                 "mountPath": "/etc/hosts"
+                            },
+                            {
+                                "name": "shared-volume",
+                                "readOnly": false,
+                                "mountPath": "/tmp"
                             }
                         ],
                         "resources": {
@@ -135,6 +146,11 @@
                                 "name": "localtime",
                                 "readOnly": true,
                                 "mountPath": "/etc/localtime"
+                            },
+                            {
+                                "name": "shared-volume",
+                                "readOnly": false,
+                                "mountPath": "/tmp"
                             }
                         ],
                         "resources": {
