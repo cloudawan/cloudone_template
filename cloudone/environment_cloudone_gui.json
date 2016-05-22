@@ -1,5 +1,4 @@
 {
-	"KUBEAPI_CLUSTER_HOST_AND_PORT": "Kubernetes kubeapi server Host IP. Format: Hostname1:Port1, Hostname2:Port2, Hostname3:Port3 ",
 	"CLOUDONE_HOST": "Cloudone Host. Format: Hostname/IP ",
 	"CLOUDONE_PORT": "Cloudone Port. Format: Number ",
 	"CLOUDONE_ANALYSIS_HOST": "Cloudone analysis Host. Format: Hostname/IP ",

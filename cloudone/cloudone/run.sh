@@ -3,7 +3,7 @@
 # Check whether Etcd is up
 # Parameter
 retry_amount=120
-etcd_endpoint_list_with_quotation=${ETCD_ENDPOINT//,}
+etcd_endpoint_list_with_quotation=${ETCD_ENDPOINTS//,}
 etcd_endpoint_list=${etcd_endpoint_list_with_quotation//\"}
 
 is_etcd_up() {
@@ -42,7 +42,8 @@ fi
 
 # Use environment
 # Use different delimiter since URL contains slash
-sed -i "s#{{ETCD_ENDPOINT}}#$ETCD_ENDPOINT#g" /etc/cloudone/configuration.json
+sed -i "s#{{ETCD_ENDPOINTS}}#$ETCD_ENDPOINTS#g" /etc/cloudone/configuration.json
+sed -i "s#{{KUBE_APISERVER_ENDPOINTS}}#$KUBE_APISERVER_ENDPOINTS#g" /etc/cloudone/configuration.json
 sed -i "s/{{CLOUDONE_ANALYSIS_HOST}}/$CLOUDONE_ANALYSIS_HOST/g" /etc/cloudone/configuration.json
 sed -i "s/{{CLOUDONE_ANALYSIS_PORT}}/$CLOUDONE_ANALYSIS_PORT/g" /etc/cloudone/configuration.json
 

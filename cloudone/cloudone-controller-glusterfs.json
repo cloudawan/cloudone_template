@@ -65,8 +65,12 @@
                         ],
                         "env": [
                             {
-                                "name": "ETCD_ENDPOINT",
+                                "name": "ETCD_ENDPOINTS",
                                 "value": "\"http://etcd.default.svc.cluster.local:4001\""
+                            },
+                            {
+                                "name": "KUBE_APISERVER_ENDPOINTS",
+                                "value": "\"https://kubernetes.default.svc.cluster.local:443\""
                             },
                             {
                                 "name": "CLOUDONE_ANALYSIS_HOST",
@@ -121,10 +125,6 @@
                         ],
                         "env": [
                             {
-                                "name": "KUBEAPI_CLUSTER_HOST_AND_PORT",
-                                "value": "kubeapi.default.svc.cluster.local:8080"
-                            },
-                            {
                                 "name": "CLOUDONE_HOST",
                                 "value": "127.0.0.1"
                             },
@@ -175,8 +175,8 @@
                         ],
                         "env": [
                             {
-                                "name": "KUBEAPI_CLUSTER_HOST_AND_PORT",
-                                "value": "\"kubeapi.default.svc.cluster.local:8080\""
+                                "name": "KUBE_APISERVER_ENDPOINTS",
+                                "value": "\"https://kubernetes.default.svc.cluster.local:443\""
                             },
                             {
                                 "name": "ELASTICSEARCH_CLUSTER_HOST",

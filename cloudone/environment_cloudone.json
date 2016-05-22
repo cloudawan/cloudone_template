@@ -1,3 +1,6 @@
 {
-	"ETCD_ENDPOINT": "The etcd endpoint list. Format: \"http://HOST1:PORT1\", \"http://HOST2:PORT2\" "
+	"ETCD_ENDPOINTS": "The etcd endpoint list. Format: \"http://HOST1:PORT1\", \"http://HOST2:PORT2\" ",
+	"KUBE_APISERVER_ENDPOINTS": "The kube apiserver endpoint list. Format: \"https://HOST1:PORT1\", \"https://HOST2:PORT2\" ",
+	"CLOUDONE_ANALYSIS_HOST": "Cloudone analysis Host. Format: Hostname/IP ",
+	"CLOUDONE_ANALYSIS_PORT": "Cloudone analysis Port. Format: Number "
 }

@@ -1,7 +1,7 @@
 {
 	"ELASTICSEARCH_CLUSTER_HOST": "Elasticsearch cluster. Format: \"Host1/IP1\", \"Host2/IP2\" ",
 	"ELASTICSEARCH_CLUSTER_PORT": "Elasticsearch port. Format: Number ",
-	"KUBEAPI_CLUSTER_HOST_AND_PORT": "Kubernetes API server Host And Port. Format: \"Host1:Port1\", \"Host2:Port2\" ",
+	"KUBE_APISERVER_ENDPOINTS": "The kube apiserver endpoint list. Format: \"https://HOST1:PORT1\", \"https://HOST2:PORT2\" ",
 	"CLOUDONE_HOST": "Cloudone Host. Format: Hostname/IP ",
 	"CLOUDONE_PORT": "Cloudone Port. Format: Number "
 }

@@ -11,9 +11,10 @@ RUN yum install -y logrotate
 
 # Download pip
 RUN yum install -y python-pip
-
 # Install python httplib2
 RUN pip install httplib2
+# Install python yaml
+RUN pip install pyyaml
 
 # Bundle app source
 COPY . /src

@@ -53,7 +53,8 @@ class Cluster:
         if self.action == "create":
             self.parameter_list = [
                 "application_name",
-                "kubeapi_host_and_port",
+                "kube_apiserver_endpoint",
+                "kube_apiserver_token",
                 "namespace",
                 "size",
                 "service_file_name",
@@ -66,13 +67,14 @@ class Cluster:
                 sys.exit(Cluster.ERROR_PARAMETER_MISSING)
             else:
                 print "Parameters are: " + str(self.parameter_dictionary)
-
+                
             self.__initialize_create()
 
         elif self.action == "resize":
             self.parameter_list = [
                 "application_name",
-                "kubeapi_host_and_port",
+                "kube_apiserver_endpoint",
+                "kube_apiserver_token",
                 "namespace",
                 "size",
                 "replication_controller_file_name",
@@ -90,7 +92,8 @@ class Cluster:
         elif self.action == "delete":
             self.parameter_list = [
                 "application_name",
-                "kubeapi_host_and_port",
+                "kube_apiserver_endpoint",
+                "kube_apiserver_token",
                 "namespace",
                 "timeout_in_second",
                 "action",
@@ -101,12 +104,13 @@ class Cluster:
                 print "Parameters are: " + str(self.parameter_dictionary)
 
             self.__initialize_delete()
-
+            
     def __initialize_create(self):
-        self.http = Http()
+        self.http = Http(disable_ssl_certificate_validation=True)
         # Parameter
         self.application_name = self.parameter_dictionary.get("application_name") #name
-        self.kubeapi_host_and_port = self.parameter_dictionary.get("kubeapi_host_and_port") #"http://127.0.0.1:8080
+        self.kube_apiserver_endpoint = self.parameter_dictionary.get("kube_apiserver_endpoint") #"http://127.0.0.1:8080
+        self.kube_apiserver_token = self.parameter_dictionary.get("kube_apiserver_token")
         self.namespace = self.parameter_dictionary.get("namespace") #default
         self.size = int(self.parameter_dictionary.get("size")) #3
         self.service_file_name = self.parameter_dictionary.get("service_file_name") #"service.json"
@@ -122,10 +126,11 @@ class Cluster:
         self.replication_controller_name = self.application_name + "-instance" #self.replication_controller_dictionary.get("metadata").get("name")
 
     def __initialize_resize(self):
-        self.http = Http()
+        self.http = Http(disable_ssl_certificate_validation=True)
         # Parameter
         self.application_name = self.parameter_dictionary.get("application_name") #name
-        self.kubeapi_host_and_port = self.parameter_dictionary.get("kubeapi_host_and_port") #"http://127.0.0.1:8080
+        self.kube_apiserver_endpoint = self.parameter_dictionary.get("kube_apiserver_endpoint") #"http://127.0.0.1:8080
+        self.kube_apiserver_token = self.parameter_dictionary.get("kube_apiserver_token")
         self.namespace = self.parameter_dictionary.get("namespace") #default
         self.size = int(self.parameter_dictionary.get("size")) #3
         self.replication_controller_file_name = self.parameter_dictionary.get("replication_controller_file_name") #"replication-controller.json"
@@ -139,10 +144,11 @@ class Cluster:
         self.replication_controller_name = self.application_name + "-instance" #self.replication_controller_dictionary.get("metadata").get("name")
 
     def __initialize_delete(self):
-        self.http = Http()
+        self.http = Http(disable_ssl_certificate_validation=True)
         # Parameter
         self.application_name = self.parameter_dictionary.get("application_name") #name
-        self.kubeapi_host_and_port = self.parameter_dictionary.get("kubeapi_host_and_port") #"http://127.0.0.1:8080
+        self.kube_apiserver_endpoint = self.parameter_dictionary.get("kube_apiserver_endpoint") #"http://127.0.0.1:8080
+        self.kube_apiserver_token = self.parameter_dictionary.get("kube_apiserver_token")
         self.namespace = self.parameter_dictionary.get("namespace") #default
         self.time_to_wait = int(self.parameter_dictionary.get("timeout_in_second")) #60 * 3
         self.action = self.parameter_dictionary.get("action") #create
@@ -157,7 +163,7 @@ class Cluster:
             key_value = parameter[2:]
             key_value_list = key_value.split("=")
             parameter_dictionary[key_value_list[0]] = key_value_list[1]
-        return parameter_dictionary
+        return parameter_dictionary        
 
     def __check_input(self):
         result = True
@@ -181,7 +187,7 @@ class Cluster:
     def __check_seed_instance_up(self, pod_list):
         for pod in pod_list:
             head, body = self.http.request(
-                self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod + "/log", "GET")
+                self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod + "/log", "GET", headers={"Authorization":self.kube_apiserver_token})
             for seed_instance_up_keyword in self.seed_instance_up_keyword_list:
                 if seed_instance_up_keyword in body:
                     pass
@@ -193,7 +199,7 @@ class Cluster:
     def __check_joining_instance_up(self, pod_list):
         for pod in pod_list:
             head, body = self.http.request(
-                self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod + "/log", "GET")
+                self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod + "/log", "GET", headers={"Authorization":self.kube_apiserver_token})
             for all_instance_up_keyword in self.all_instance_up_keyword_list:
                 if all_instance_up_keyword in body:
                     pass
@@ -208,7 +214,7 @@ class Cluster:
     # Check service is up
     def __check_service_up(self):
         head, body = self.http.request(
-            self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/services/" + self.service_name, "GET")
+            self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/services/" + self.service_name, "GET", headers={"Authorization":self.kube_apiserver_token})
         if head.status == 200:
             return True
         else:
@@ -218,7 +224,7 @@ class Cluster:
     def __get_all_pod_name(self, expected_size=-1):
         pod_list = []
         head, body = self.http.request(
-            self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/pods/", "GET")
+            self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/pods/", "GET", headers={"Authorization":self.kube_apiserver_token})
         dictionary = json.loads(body)
         for item in dictionary.get("items"):
             # Remove the pod name part -xxxxx
@@ -245,13 +251,13 @@ class Cluster:
         service_dictionary["metadata"]["name"] = self.service_name
         service_dictionary["metadata"]["labels"]["name"] = self.service_name
         service_dictionary["spec"]["selector"]["name"] = self.service_name
-
+        
         return service_dictionary
-
+            
     def create_cluster(self):
         # Create a replication controller
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                                       "/replicationcontrollers", "POST", json.dumps(self.__create_replication_controller()))
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                                       "/replicationcontrollers", "POST", json.dumps(self.__create_replication_controller()), headers={"Authorization":self.kube_apiserver_token})
         if head.status != 201:
             print "Fail to create replication controller " + self.replication_controller_name
             print head
@@ -274,8 +280,8 @@ class Cluster:
             return Cluster.ERROR_FAIL_TO_CREATE_SEED_INSTANCE
 
         # Create a service to track all instances
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                                       "/services", "POST", json.dumps(self.__create_service()))
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                                       "/services", "POST", json.dumps(self.__create_service()), headers={"Authorization":self.kube_apiserver_token})  
         if head.status != 201:
             print "Fail to create service " + self.service_name
             print head
@@ -292,7 +298,7 @@ class Cluster:
         # Resize
         if self.size > 1:
             for i in xrange(1, self.size):
-                result = self.resize_cluster(i + 1)
+                result = self.resize_cluster(i + 1) 
                 if result != Cluster.SUCEESS:
                     return result
             return Cluster.SUCEESS
@@ -300,16 +306,16 @@ class Cluster:
             return Cluster.SUCEESS
 
     def clean_cluster(self):
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/services/" +
-                                       self.service_name, "DELETE")
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/services/" +
+                                       self.service_name, "DELETE", headers={"Authorization":self.kube_apiserver_token})
         if head.status != 200:
             print "Fail to delete service " + self.service_name
             print head
             print body
             return Cluster.ERROR_FAIL_TO_DELETE_SERVICE
-
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/replicationcontrollers/" +
-                          self.replication_controller_name, "DELETE")
+            
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/replicationcontrollers/" +
+                                       self.replication_controller_name, "DELETE", headers={"Authorization":self.kube_apiserver_token})
         if head.status != 200:
             print "Fail to delete replication controller " + self.replication_controller_name
             print head
@@ -318,13 +324,13 @@ class Cluster:
 
         pod_list = self.__get_all_pod_name()
         for pod in pod_list:
-            head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod, "DELETE")
+            head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace + "/pods/" + pod, "DELETE", headers={"Authorization":self.kube_apiserver_token})
             if head.status != 200:
                 print "Fail to delete pod " + pod
                 print head
                 print body
                 return Cluster.ERROR_FAIL_TO_DELETE_POD
-
+        
         return Cluster.SUCEESS
                               
     def resize_cluster(self, size):
@@ -335,10 +341,10 @@ class Cluster:
             return Cluster.ERROR_FAIL_TO_GET_SEED_POD_NAME
         else:
             print("The created seed pod is:  " + str(seed_pod_list))
-
+            
         # Resize
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                                       "/replicationcontrollers/" + self.replication_controller_name, "GET")
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                                       "/replicationcontrollers/" + self.replication_controller_name, "GET", headers={"Authorization":self.kube_apiserver_token})
         if head.status != 200:
             print "Fail to get the current replication controller data"
             print head
@@ -348,9 +354,9 @@ class Cluster:
         replication_controller_dictionary = json.loads(body)
         replication_controller_dictionary["spec"]["replicas"] = size
 
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
                                        "/replicationcontrollers/" + self.replication_controller_name, "PUT",
-                                       json.dumps(replication_controller_dictionary))
+                                       json.dumps(replication_controller_dictionary), headers={"Authorization":self.kube_apiserver_token})
         if head.status != 200:
             print "Fail to put the new replication controller data"
             print head
