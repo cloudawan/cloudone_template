@@ -46,7 +46,8 @@ class Glusterfs:
         if self.action == "create":
             self.parameter_list = [
                 "application_name",
-                "kubeapi_host_and_port",
+                "kube_apiserver_endpoint",
+                "kube_apiserver_token",
                 "namespace",
                 "size",
                 "service_file_name",
@@ -64,7 +65,8 @@ class Glusterfs:
         elif self.action == "delete":
             self.parameter_list = [
                 "application_name",
-                "kubeapi_host_and_port",
+                "kube_apiserver_endpoint",
+                "kube_apiserver_token",
                 "namespace",
                 "timeout_in_second",
                 "action",
@@ -77,10 +79,11 @@ class Glusterfs:
             self.__initialize_delete()
 
     def __initialize_create(self):
-        self.http = Http()
+        self.http = Http(disable_ssl_certificate_validation=True)
 
         self.application_name = self.parameter_dictionary.get("application_name")
-        self.kubeapi_host_and_port = self.parameter_dictionary.get("kubeapi_host_and_port")
+        self.kube_apiserver_endpoint = self.parameter_dictionary.get("kube_apiserver_endpoint")
+        self.kube_apiserver_token = self.parameter_dictionary.get("kube_apiserver_token")
         self.size = int(self.parameter_dictionary.get("size"))
         self.service_file_name = self.parameter_dictionary.get("service_file_name")
         self.environment_file_name = self.parameter_dictionary.get("environment_file_name")
@@ -95,10 +98,11 @@ class Glusterfs:
         self.endpoint_name = self.application_name
 
     def __initialize_delete(self):
-        self.http = Http()
+        self.http = Http(disable_ssl_certificate_validation=True)
 
         self.application_name = self.parameter_dictionary.get("application_name")
-        self.kubeapi_host_and_port = self.parameter_dictionary.get("kubeapi_host_and_port")
+        self.kube_apiserver_endpoint = self.parameter_dictionary.get("kube_apiserver_endpoint")
+        self.kube_apiserver_token = self.parameter_dictionary.get("kube_apiserver_token")
         self.time_to_wait = int(self.parameter_dictionary.get("timeout_in_second"))
         self.namespace = self.parameter_dictionary.get("namespace")
         self.action = self.parameter_dictionary.get("action")
@@ -173,8 +177,8 @@ class Glusterfs:
 
     def create_cluster(self):
         # Create a endpoint
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/endpoints", "POST", json.dumps(self.__create_endpoint()))
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                          "/endpoints", "POST", json.dumps(self.__create_endpoint()), headers={"Authorization":self.kube_apiserver_token})
 
         if head.status != 201:
             print "Fail to create endpoint " + self.endpoint_name
@@ -183,8 +187,8 @@ class Glusterfs:
             return Glusterfs.ERROR_FAIL_TO_CREATE_ENDPOINT
 
         # Create a service
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/services", "POST", json.dumps(self.__create_service()))
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                          "/services", "POST", json.dumps(self.__create_service()), headers={"Authorization":self.kube_apiserver_token})
 
         if head.status != 201:
             print "Fail to create service " + self.service_name
@@ -196,8 +200,8 @@ class Glusterfs:
 
     def clean_cluster(self):
         # Delete a endpoint
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/endpoints/" + self.endpoint_name, "DELETE")
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                          "/endpoints/" + self.endpoint_name, "DELETE", headers={"Authorization":self.kube_apiserver_token})
 
         if head.status != 200:
             print "Fail to delete endpoint " + self.endpoint_name
@@ -206,8 +210,8 @@ class Glusterfs:
             return Glusterfs.ERROR_FAIL_TO_DELETE_ENDPOINT
 
         # Delete a service
-        head, body = self.http.request(self.kubeapi_host_and_port + "/api/v1/namespaces/" + self.namespace +
-                          "/services/" + self.service_name, "DELETE")
+        head, body = self.http.request(self.kube_apiserver_endpoint + "/api/v1/namespaces/" + self.namespace +
+                          "/services/" + self.service_name, "DELETE", headers={"Authorization":self.kube_apiserver_token})
 
         if head.status != 200:
             print "Fail to delete service " + self.service_name
