@@ -51,6 +51,14 @@
                         "emptyDir": {
                             "medium": ""
                         }
+                    },
+                    {
+                        "name": "cloudone-gui-configuration-volume",
+                        "glusterfs": {
+                            "endpoints": "glusterfs",
+                            "path": "cloudone_gui_configuration_volume",
+                            "readOnly": false
+                        }
                     }
                 ],
                 "containers": [
@@ -151,6 +159,11 @@
                                 "name": "shared-volume",
                                 "readOnly": false,
                                 "mountPath": "/tmp"
+                            },
+                            {
+                                "name": "cloudone-gui-configuration-volume",
+                                "readOnly": false,
+                                "mountPath": "/etc/cloudone_gui"
                             }
                         ],
                         "resources": {
