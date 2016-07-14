@@ -11,7 +11,7 @@ os.system("kubectl create -f glusterfs-endpoints.json")
 os.system("kubectl create -f glusterfs-service.json --validate=false")
 
 # create a replication controller to replicate nodes
-os.system("kubectl create -f private-registry-controller-wth-glusterfs.json")
+os.system("kubectl create -f private-registry-controller-with-glusterfs.json")
 
 # create a service 
 os.system("kubectl create -f private-registry-service.json")

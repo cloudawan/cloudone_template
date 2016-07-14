@@ -7,7 +7,7 @@
     "spec": {
         "ports": [
             {
-                "port": 40000
+                "port": 1
             }
         ]
     }

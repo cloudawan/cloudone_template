@@ -28,10 +28,8 @@
                     },
 					{
                         "name": "private-registry-volume",
-                        "glusterfs": {
-                            "endpoints": "glusterfs",
-                            "path": "private_registry_volume",
-                            "readOnly": false
+                        "hostPath": {
+                            "path": "/data/private_registry_volume"
                         }
                     }
                 ],

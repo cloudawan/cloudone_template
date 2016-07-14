@@ -3,7 +3,7 @@ import subprocess
 
 
 
-os.system("kubectl delete -f private-registry-controller-wth-glusterfs.json")
+os.system("kubectl delete -f private-registry-controller-with-glusterfs.json")
 os.system("kubectl delete -f private-registry-service.json")
 os.system("kubectl delete -f glusterfs-endpoints.json")
 os.system("kubectl delete -f glusterfs-service.json")
