@@ -1,0 +1,24 @@
+{
+    "kind":"Service",
+    "apiVersion":"v1",
+    "metadata":{
+        "name":"spark-worker",
+        "labels":{
+            "name":"spark-worker"
+        }
+    },
+    "spec":{
+        "ports": [
+			{
+                "name": "gui",
+                "port": 8081,
+                "targetPort": 8081,
+                "protocol": "TCP"
+            }
+        ],
+        "selector":{
+            "name":"spark-worker"
+        },
+        "type": "NodePort"
+    }
+}

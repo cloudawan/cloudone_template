@@ -1,0 +1,30 @@
+{
+    "kind":"Service",
+    "apiVersion":"v1",
+    "metadata":{
+        "name":"spark-master",
+        "labels":{
+            "name":"spark-master"
+        }
+    },
+    "spec":{
+        "ports": [
+            {
+                "name": "master",
+                "port": 7077,
+                "targetPort": 7077,
+                "protocol": "TCP"
+            },
+			{
+                "name": "gui",
+                "port": 8080,
+                "targetPort": 8080,
+                "protocol": "TCP"
+            }
+        ],
+        "selector":{
+            "name":"spark-master"
+        },
+        "type": "NodePort"
+    }
+}

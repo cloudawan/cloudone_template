@@ -1,0 +1,4 @@
+{
+	"NAMESPACE": "default",
+	"MASTER_SERVICE_NAME": "spark-master"
+}
